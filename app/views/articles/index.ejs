@@ -1,0 +1,120 @@
+<%- include ("../templates/head") -%>
+
+<section>
+  <%- include ("../templates/header") -%>
+</section>
+
+<section>
+    <div class="mid-section">
+      <div class="disclaimer-head col-md-12">
+        <h5>Browse Articles</h5>
+          <% if(showStart === 0) { %>
+          <% } else { %>
+            <small class="text-muted">
+            Showing <%= showStart %> - <%= showEnd %> of <%= total %> Articles.
+            </small>
+          <% } %>
+        <hr>
+      </div>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                <% if(articles.length > 0) { %>
+                    <% articles.forEach(function(article){ %>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..."></a>
+                        <div class="card-body">
+                        <div class="small text-muted">
+                            <% let today = new Date();%>
+                            <% let options = {day: "numeric", month: "short", year: "numeric"}; %>
+                            Created on: <%= article.created_at.toLocaleDateString("en-US", options); %>
+                        </div>
+                        <h2 class="card-title h4"><i class="fas fa-flag-checkered" data-toggle="tooltip" data-placement="top" title="Admin"></i>
+                            <% let newStr; %>
+                            <% if(article.title.length < 24) { %>
+                            <% newStr = article.title %>
+                            <% } else { %>
+                            <% newStr = article.title.substr(0, 30); %>
+                            <% newStr = (newStr.substr(0, Math.min(newStr.length, newStr.lastIndexOf(" ")))) + "..." %>
+                            <% } %>
+                            <a href="/article/<%= article._id + "/" + article.title %>"><%= newStr %></a>
+                        </h2>
+                        <p class="card-text">
+                            <%= article.spiel %>
+                        </p>
+                            <a class="btn btn-primary" href="/article/<%= article._id + "/" + article.title %>">Read more →</a> 
+                        </div>
+                        </div>
+                        <br>
+                    </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="container-fluid">
+                    <h1>Hello Friend</h1>
+                    <p>Nothing here, try again later.</p>
+                    </div>
+                <% } %>
+                </div>
+            </div>
+            <div class="col md-4">
+                <!-- right side of page -->
+            </div>
+        </div>
+      </div>
+     
+      <div class="pagination-links col-md-4 col-md-offset-4">
+        <% if (pages > 1) { %>
+          <ul class="pagination pagination-sm">
+            <% if (current == 1) { %>
+              <li class="page-item disabled">
+                <a class="page-link">&laquo;</a>
+              </li>
+            <% } else { %>
+              <li>
+                <a class="page-link" href="/article/1">&laquo;</a>
+              </li>
+            <% } %>
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+              <li class="page-item disabled">
+                <a class="page-link">...</a>
+              </li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+              <% if (i == current) { %>
+                <li class="page-item active">
+                  <a class="page-link"><%= i %></a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a class="page-link" href="/article/<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+              <% if (i == Number(current) + 4 && i < pages) { %>
+                <li class="page-item disabled">
+                  <a class="page-link">...</a>
+                </li>
+              <% } %>
+            <% } %>
+            <% if (current == pages) { %>
+              <li class="page-item disabled">
+                <a class="page-link">&raquo;</a>
+              </li>
+            <% } else { %>
+              <li class="page-item">
+                <a class="page-link" href="/article/<%= pages %>">&raquo;</a>
+              </li>
+            <% } %>
+          </ul>
+        <% } %>
+      </div>
+      <div class="mid-section">
+        <div class="disclaimer-head col-md-12">
+            <hr>
+        </div>
+    </div>
+  </section>
+
+<%- include ("../templates/footer") -%>
