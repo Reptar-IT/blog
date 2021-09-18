@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
 // Connect to mongodb cloud server using mongoose
-mongoose.connect("mongodb+srv://reco117:Benjamin!2@cluster0.6nxdu.mongodb.net/coinmancer?retryWrites=true/" , { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://reco117:------@cluster0.-----.mongodb.net/coinmancer?retryWrites=true/" , { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
 
 const pagesController = require(__dirname + "/app/controllers/pagesController");
